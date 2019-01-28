@@ -1,9 +1,11 @@
 <template>
-  <button
-    @click="increase()"
-    @contextmenu="decrease()"
-    :class="{positive:counter>0,negative:counter<0}"
-  >{{counter}}</button>
+    <button
+        @click="increase()"
+        @contextmenu="decrease()"
+        :class="{ positive: counter > 0, negative: counter < 0 }"
+    >
+        {{ counter }}
+    </button>
 </template>
 
 <script>
@@ -24,5 +26,4 @@ export default {
 }
 </script>
 
-<style>
-</style>
+<style></style>
