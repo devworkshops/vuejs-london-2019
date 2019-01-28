@@ -21,7 +21,7 @@
                             name: 'suppliers-edit',
                             params: { id: supplier.id }
                         }"
-                        class="btn btn-primary"
+                        class="btn btn-primary suppliers-edit"
                         >Edit</router-link
                     >
                 </td>

@@ -28,6 +28,11 @@ export default new Router({
             component: () => import('./views/Suppliers/SupplierList.vue')
         },
         {
+            path: '/suppliers/new',
+            name: 'suppliers-new',
+            component: () => import('./views/Suppliers/SupplierEdit.vue')
+        },
+        {
             path: '/suppliers/:id',
             name: 'suppliers-edit',
             component: () => import('./views/Suppliers/SupplierEdit.vue'),
