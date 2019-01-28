@@ -1,8 +1,13 @@
-import Vue from "vue";
-import App from "./App.vue";
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import dateFilter from '@/filters/date'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
+
+Vue.filter('date', dateFilter)
 
 new Vue({
-  render: h => h(App)
-}).$mount("#app");
+    router,
+    render: h => h(App)
+}).$mount('#app')
