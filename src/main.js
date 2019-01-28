@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import Vuelidate from 'vuelidate'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
