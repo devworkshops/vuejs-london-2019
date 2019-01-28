@@ -19,11 +19,6 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <router-link to="/about" :exact="true" class="nav-link"
-                            >About</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
                         <router-link
                             to="/suppliers"
                             :exact="true"
@@ -45,6 +40,11 @@
                             :exact="true"
                             class="nav-link"
                             >Products</router-link
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/about" :exact="true" class="nav-link"
+                            >About</router-link
                         >
                     </li>
                 </ul>
