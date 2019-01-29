@@ -25,7 +25,14 @@
                     type="text"
                     v-model="model.contactName"
                     id="contactNameField"
+                    :class="{ 'is-invalid': errors && errors.contactName }"
                 />
+                <div
+                    class="invalid-feedback"
+                    v-if="errors && errors.contactName"
+                >
+                    {{ errors.contactName }}
+                </div>
             </div>
             <div class="form-group">
                 <label class="form-label">Contact Title</label>
@@ -34,7 +41,21 @@
                     type="text"
                     v-model="model.contactTitle"
                     id="contactTitleField"
+                    :class="{ 'is-invalid': errors && errors.contactTitle }"
                 />
+                <div
+                    class="invalid-feedback"
+                    v-if="errors && errors.contactTitle"
+                >
+                    {{ errors.contactTitle }}
+                </div>
+            </div>
+            <div v-if="model.address">
+                <label class="col-form-label">Address</label>
+                <address-form
+                    :address="model.address"
+                    :errors="errors"
+                ></address-form>
             </div>
         </form>
         <p>
