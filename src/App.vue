@@ -1,34 +1,44 @@
 <template>
-    <div id="app">
-        <header>
-            <nav-bar></nav-bar>
-        </header>
+  <div id="app">
+    <header>
+      <nav-bar :user="auth.currentUser"></nav-bar>
+    </header>
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <main role="main" class="flex-shrink-0">
-                        <div class="container">
-                            <router-view />
-                        </div>
-                    </main>
-                </div>
-            </div>
-        </div>
-        <footer class="footer mt-auto py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <main role="main" class="flex-shrink-0">
             <div class="container">
-                <span class="text-muted">
-                    Northwind Traders &copy;
-                    {{ new Date() | date('YYYY') }}
-                </span>
+              <router-view/>
             </div>
-        </footer>
+          </main>
+        </div>
+      </div>
     </div>
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <span class="text-muted">
+          Northwind Traders &copy;
+          {{ new Date() | date('YYYY') }}
+        </span>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
+import { AuthService } from '@/services/NorthwindService.js'
 export default {
-    name: 'app'
+    name: 'app',
+    data() {
+        return {
+            auth: Object
+        }
+    },
+    created() {
+        this.auth = AuthService
+        AuthService.token()
+    }
 }
 </script>
 
@@ -38,6 +48,7 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 // @import '~bootswatch/dist/Darkly/bootswatch';
 @import '~bootstrap-vue/dist/bootstrap-vue';
+@import '~nprogress/nprogress.css';
 
 html,
 body {
