@@ -4,8 +4,8 @@ describe('General', () => {
         cy.contains('h1', 'Oops')
     })
 
-    it('home page shows welcome', () => {
+    it('home page shows NDC', () => {
         cy.visit('/')
-        cy.contains('h1', 'Welcome')
+        cy.contains('h1', 'NDC')
     })
 })

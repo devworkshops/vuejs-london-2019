@@ -7,6 +7,7 @@ import BootstrapVue from 'bootstrap-vue'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import store from './store'
+import Axios from 'axios'
 
 Vue.use(Vuelidate)
 Vue.use(BootstrapVue)
@@ -58,8 +59,13 @@ requireFilters.keys().forEach(fileName => {
     Vue.filter(componentName, componentConfig.default)
 })
 
-new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app')
+Axios.get('/static/config.json').then(config => {
+    console.log(config)
+    Axios.defaults.baseURL = config.data.apiBaseUrl
+
+    new Vue({
+        router,
+        store,
+        render: h => h(App)
+    }).$mount('#app')
+})
