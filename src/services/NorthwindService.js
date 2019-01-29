@@ -62,5 +62,8 @@ export const ProductsService = {
         return apiClient.get('/products?name=' + name).then(result => {
             return result.data.length === 0
         })
+    },
+    getAllPaged(page) {
+        return apiClient.get(`/products?_page=${page}`)
     }
 }

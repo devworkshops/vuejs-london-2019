@@ -9,41 +9,47 @@
                 >Add</router-link
             >
         </div>
-        <table class="table">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Actions</th>
-            </tr>
-            <tr v-for="product in products" :key="product.id">
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.unitPrice }}</td>
-                <td>{{ product.unitsInStock }}</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <router-link
-                            tag="button"
-                            :to="{
-                                name: 'products-edit',
-                                params: { id: product.id }
-                            }"
-                            class="btn btn-secondary"
-                            >Edit</router-link
-                        >
-                        <button
-                            type="button"
-                            class="btn btn-danger"
-                            @click="remove(product.id)"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <b-table striped hover :items="products" :fields="fields">
+            <template slot="actions" slot-scope="row">
+                <div class="btn-group" role="group">
+                    <router-link
+                        tag="button"
+                        :to="{
+                            name: 'products-edit',
+                            params: { id: row.item.id }
+                        }"
+                        class="btn btn-secondary"
+                        >Edit</router-link
+                    >
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="deleteRequested(row.item)"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </template>
+        </b-table>
+        <b-pagination
+            :total-rows="productCount"
+            :per-page="10"
+            v-model="page"
+            @input="fetchAll()"
+        />
+        <b-modal
+            id="deleteModal"
+            ref="deleteModal"
+            title="Delete Product?"
+            centered
+            ok-title="Delete"
+            ok-variant="danger"
+            @ok="deleteConfirmed"
+        >
+            <p class="my-4">
+                Are you sure you want to delete '{{ productToDelete.name }}'?
+            </p>
+        </b-modal>
     </div>
 </template>
 
@@ -53,7 +59,17 @@ import { ProductsService } from '@/services/NorthwindService.js'
 export default {
     data() {
         return {
-            products: []
+            products: [],
+            fields: [
+                { key: 'id', sortable: true },
+                { key: 'name', sortable: true },
+                { key: 'unitPrice', sortable: true, label: 'Price' },
+                { key: 'unitsInStock', sortable: true, label: 'Stock' },
+                { key: 'actions' }
+            ],
+            productCount: 0,
+            page: 1,
+            productToDelete: {}
         }
     },
     created() {
@@ -61,16 +77,26 @@ export default {
     },
     methods: {
         fetchAll() {
-            ProductsService.getAll()
-                .then(result => (this.products = result.data))
+            ProductsService.getAllPaged(this.page)
+                .then(result => {
+                    this.productCount = parseInt(
+                        result.headers['x-total-count']
+                    )
+                    this.products = result.data
+                })
                 .catch(error => console.error(error))
         },
-        remove(id) {
-            ProductsService.delete(id)
-                .then(
-                    () =>
-                        (this.products = this.products.filter(p => p.id !== id))
-                )
+        deleteRequested(product) {
+            this.productToDelete = product
+            this.$refs.deleteModal.show()
+        },
+        deleteConfirmed() {
+            ProductsService.delete(this.productToDelete.id)
+                .then(() => {
+                    this.products = this.products.filter(
+                        p => p.id !== this.productToDelete.id
+                    )
+                })
                 .catch(error => console.error(error))
         }
     }

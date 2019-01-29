@@ -17,10 +17,10 @@
         </div>
         <footer class="footer mt-auto py-3">
             <div class="container">
-                <span class="text-muted"
-                    >Northwind Traders &copy;
-                    {{ new Date() | date('YYYY') }}</span
-                >
+                <span class="text-muted">
+                    Northwind Traders &copy;
+                    {{ new Date() | date('YYYY') }}
+                </span>
             </div>
         </footer>
     </div>
@@ -32,7 +32,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import './assets/custom.scss';
+@import '~bootswatch/dist/Darkly/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/Darkly/bootswatch';
+@import '~bootstrap-vue/dist/bootstrap-vue';
+
 html,
 body {
     height: 100%;
@@ -55,5 +61,9 @@ main > .container {
 .footer > .container {
     padding-right: 15px;
     padding-left: 15px;
+}
+.feather {
+    width: 16px;
+    height: 16px;
 }
 </style>

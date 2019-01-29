@@ -1,64 +1,51 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <b-navbar
+        toggleable="md"
+        type="dark"
+        placement="fixed"
+        fill="false"
+        variant="dark"
+    >
         <div class="container">
-            <a class="navbar-brand" href="#">Northwind Traders</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarCollapse"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <router-link to="/" :exact="true" class="nav-link"
-                            >Home</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            to="/suppliers"
-                            :exact="true"
-                            class="nav-link"
-                            >Suppliers</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            to="/categories"
-                            :exact="true"
-                            class="nav-link"
-                            >Categories</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link
-                            to="/products"
-                            :exact="true"
-                            class="nav-link"
-                            >Products</router-link
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <router-link to="/about" :exact="true" class="nav-link"
-                            >About</router-link
-                        >
-                    </li>
-                </ul>
-            </div>
+            <b-navbar-brand to="/">Northwind Traders</b-navbar-brand>
+            <b-navbar-toggle target="navbarCollapse"></b-navbar-toggle>
+            <b-collapse is-nav id="navbarCollapse">
+                <b-navbar-nav class="mr-auto">
+                    <b-nav-item to="/" :exact="true">
+                        <vue-feather type="home"></vue-feather>Home
+                    </b-nav-item>
+                    <b-nav-item to="/suppliers">
+                        <vue-feather type="shopping-cart"></vue-feather
+                        >Suppliers
+                    </b-nav-item>
+                    <b-nav-item to="/categories">
+                        <vue-feather type="list"></vue-feather>Categories
+                    </b-nav-item>
+                    <b-nav-item to="/products">
+                        <vue-feather type="package"></vue-feather>Products
+                    </b-nav-item>
+                </b-navbar-nav>
+            </b-collapse>
         </div>
-    </nav>
+    </b-navbar>
 </template>
 
 <script>
-export default {}
+import VueFeather from 'vue-feather'
+
+export default {
+    components: {
+        VueFeather
+    }
+}
 </script>
 
 <style scoped>
 .nav > .container {
     min-height: 56px;
+}
+.navbar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
 }
 </style>

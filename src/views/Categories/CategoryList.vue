@@ -9,40 +9,25 @@
                 <th>Actions</th>
             </tr>
             <template v-for="(category, index) in categories">
-                <tr
-                    :key="category.id"
-                    v-if="category.id === editingCategory.id"
-                >
+                <tr :key="category.id" v-if="category.id === editingCategory.id">
                     <td>{{ category.id }}</td>
                     <td>
-                        <input
-                            type="text"
-                            v-model="editingCategory.name"
-                            class="form-control"
-                        />
+                        <input type="text" v-model="editingCategory.name" class="form-control">
                     </td>
                     <td>
                         <input
                             type="text"
                             v-model="editingCategory.description"
                             class="form-control"
-                        />
+                        >
                     </td>
                     <td>
                         <div class="btn-group" role="group">
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                                @click="update()"
-                            >
-                                Update
+                            <button type="button" class="btn btn-secondary" @click="update()">
+                                <vue-feather type="check"></vue-feather>
                             </button>
-                            <button
-                                type="button"
-                                class="btn btn-warning"
-                                @click="cancelUpdate()"
-                            >
-                                Cancel
+                            <button type="button" class="btn btn-warning" @click="cancelUpdate()">
+                                <vue-feather type="corner-up-left"></vue-feather>
                             </button>
                         </div>
                     </td>
@@ -58,14 +43,14 @@
                                 class="btn btn-secondary"
                                 @click="edit(category, index)"
                             >
-                                Edit
+                                <vue-feather type="edit-2"></vue-feather>
                             </button>
                             <button
                                 type="button"
                                 class="btn btn-danger"
                                 @click="remove(category.id)"
                             >
-                                Delete
+                                <vue-feather type="x"></vue-feather>
                             </button>
                         </div>
                     </td>
@@ -80,10 +65,8 @@
                         placeholder="Name..."
                         class="form-control"
                         :class="{ 'is-invalid': errors && errors.name }"
-                    />
-                    <div class="invalid-feedback" v-if="errors && errors.name">
-                        {{ errors.name }}
-                    </div>
+                    >
+                    <div class="invalid-feedback" v-if="errors && errors.name">{{ errors.name }}</div>
                 </td>
                 <td>
                     <input
@@ -92,29 +75,19 @@
                         placeholder="Description..."
                         class="form-control"
                         :class="{ 'is-invalid': errors && errors.description }"
-                    />
+                    >
                     <div
                         class="invalid-feedback"
                         v-if="errors && errors.description"
-                    >
-                        {{ errors.description }}
-                    </div>
+                    >{{ errors.description }}</div>
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            @click="add()"
-                        >
-                            Add
+                        <button type="button" class="btn btn-secondary" @click="add()">
+                            <vue-feather type="plus"></vue-feather>
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-warning"
-                            @click="resetAdd()"
-                        >
-                            Cancel
+                        <button type="button" class="btn btn-warning" @click="resetAdd()">
+                            <vue-feather type="corner-up-left"></vue-feather>
                         </button>
                     </div>
                 </td>
@@ -125,8 +98,12 @@
 
 <script>
 import { CategoriesService } from '@/services/NorthwindService.js'
+import VueFeather from 'vue-feather'
 
 export default {
+    components: {
+        VueFeather
+    },
     data() {
         return {
             categories: [],
