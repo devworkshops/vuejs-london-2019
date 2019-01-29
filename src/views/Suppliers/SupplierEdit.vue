@@ -73,7 +73,7 @@ import { SuppliersService } from '@/services/NorthwindService.js'
 export default {
     name: 'SupplierEdit',
     props: {
-        id: String,
+        id: Number,
         supplier: Object
     },
     data() {
