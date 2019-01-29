@@ -9,25 +9,42 @@
                 <th>Actions</th>
             </tr>
             <template v-for="(category, index) in categories">
-                <tr :key="category.id" v-if="category.id === editingCategory.id">
+                <tr
+                    :key="category.id"
+                    v-if="category.id === editingCategory.id"
+                >
                     <td>{{ category.id }}</td>
                     <td>
-                        <input type="text" v-model="editingCategory.name" class="form-control">
+                        <input
+                            type="text"
+                            v-model="editingCategory.name"
+                            class="form-control"
+                        />
                     </td>
                     <td>
                         <input
                             type="text"
                             v-model="editingCategory.description"
                             class="form-control"
-                        >
+                        />
                     </td>
                     <td>
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-secondary" @click="update()">
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                @click="update()"
+                            >
                                 <vue-feather type="check"></vue-feather>
                             </button>
-                            <button type="button" class="btn btn-warning" @click="cancelUpdate()">
-                                <vue-feather type="corner-up-left"></vue-feather>
+                            <button
+                                type="button"
+                                class="btn btn-warning"
+                                @click="cancelUpdate()"
+                            >
+                                <vue-feather
+                                    type="corner-up-left"
+                                ></vue-feather>
                             </button>
                         </div>
                     </td>
@@ -65,8 +82,10 @@
                         placeholder="Name..."
                         class="form-control"
                         :class="{ 'is-invalid': errors && errors.name }"
-                    >
-                    <div class="invalid-feedback" v-if="errors && errors.name">{{ errors.name }}</div>
+                    />
+                    <div class="invalid-feedback" v-if="errors && errors.name">
+                        {{ errors.name }}
+                    </div>
                 </td>
                 <td>
                     <input
@@ -75,18 +94,28 @@
                         placeholder="Description..."
                         class="form-control"
                         :class="{ 'is-invalid': errors && errors.description }"
-                    >
+                    />
                     <div
                         class="invalid-feedback"
                         v-if="errors && errors.description"
-                    >{{ errors.description }}</div>
+                    >
+                        {{ errors.description }}
+                    </div>
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary" @click="add()">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            @click="add()"
+                        >
                             <vue-feather type="plus"></vue-feather>
                         </button>
-                        <button type="button" class="btn btn-warning" @click="resetAdd()">
+                        <button
+                            type="button"
+                            class="btn btn-warning"
+                            @click="resetAdd()"
+                        >
                             <vue-feather type="corner-up-left"></vue-feather>
                         </button>
                     </div>
@@ -99,6 +128,7 @@
 <script>
 import { CategoriesService } from '@/services/NorthwindService.js'
 import VueFeather from 'vue-feather'
+import { mapActions } from 'vuex'
 
 export default {
     components: {
@@ -124,10 +154,15 @@ export default {
         this.fetchAll()
     },
     methods: {
+        ...mapActions(['raiseSuccessNotification', 'raiseErrorNotification']),
         fetchAll() {
             CategoriesService.getAll()
                 .then(result => (this.categories = result.data))
-                .catch(error => console.error(error))
+                .catch(() => {
+                    this.raiseErrorNotification(
+                        'A server error occurred attempting to get all categories.'
+                    )
+                })
         },
         edit(category, index) {
             this.editingCategory = { ...category }
@@ -136,10 +171,21 @@ export default {
         update() {
             CategoriesService.update(this.editingCategory)
                 .then(() => {
+                    this.raiseSuccessNotification(
+                        `The category '${
+                            this.editingCategory.name
+                        }' was successfully updated.`
+                    )
                     this.categories[this.editingIndex] = this.editingCategory
                     this.editingCategory = {}
                 })
-                .catch(error => console.error(error))
+                .catch(() => {
+                    this.raiseErrorNotification(
+                        `A server error occurred attempting to update the category '${
+                            this.editingCategory.name
+                        }'.`
+                    )
+                })
         },
         cancelUpdate() {
             this.editingCategory = {}
@@ -148,8 +194,17 @@ export default {
             CategoriesService.delete(id)
                 .then(() => {
                     this.categories = this.categories.filter(c => c.id !== id)
+                    this.raiseSuccessNotification(
+                        `The category was successfully deleted.`
+                    )
                 })
-                .catch(error => console.error(error))
+                .catch(() => {
+                    this.raiseErrorNotification(
+                        `A server error occurred attempting to delete the category '${
+                            this.categoryToDelete.name
+                        }'.`
+                    )
+                })
         },
         add() {
             this.validate(this.addingCategory)
@@ -158,11 +213,22 @@ export default {
             }
 
             CategoriesService.create(this.addingCategory)
-                .then(result => {
-                    this.categories.push(result.data)
+                .then(() => {
+                    this.raiseSuccessNotification(
+                        `The category '${
+                            this.addingCategory.name
+                        }' was successfully created.`
+                    )
+                    this.fetchAll()
                     this.resetAdd()
                 })
-                .catch(error => console.error(error))
+                .catch(() => {
+                    this.raiseErrorNotification(
+                        `A server error occurred attempting to create the category '${
+                            this.addingCategory.name
+                        }'.`
+                    )
+                })
         },
         resetAdd() {
             this.addingCategory = { ...this.defaultCategory }

@@ -1,33 +1,44 @@
 <template>
-  <div id="app">
-    <header>
-      <nav-bar :user="auth.currentUser"></nav-bar>
-    </header>
+    <div id="app">
+        <header>
+            <nav-bar :user="auth.currentUser"></nav-bar>
+        </header>
 
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <main role="main" class="flex-shrink-0">
+        <b-container>
+            <b-row>
+                <b-col>
+                    <main role="main" class="flex-shrink-0">
+                        <div class="container">
+                            <router-view />
+                        </div>
+                    </main>
+                </b-col>
+                <b-collapse id="collapseNotifications" class="border-left pl-2">
+                    <b-col>
+                        <notification-panel></notification-panel>
+                    </b-col>
+                </b-collapse>
+            </b-row>
+        </b-container>
+
+        <footer class="footer mt-auto py-3">
             <div class="container">
-              <router-view/>
+                <span class="text-muted">
+                    Northwind Traders &copy; {{ new Date() | date('YYYY') }} -
+                    Build: {{ release.build }} - Environment:
+                    {{ release.environment }} - Failed Health Checks:
+                    {{ failedHealthCheckCount }}
+                </span>
             </div>
-          </main>
-        </div>
-      </div>
+        </footer>
     </div>
-    <footer class="footer mt-auto py-3">
-      <div class="container">
-        <span class="text-muted">
-          Northwind Traders &copy;
-          {{ new Date() | date('YYYY') }}
-        </span>
-      </div>
-    </footer>
-  </div>
 </template>
 
 <script>
 import { AuthService } from '@/services/NorthwindService.js'
+import { mapState, mapGetters } from 'vuex'
+import NotificationPanel from '@/components/NotificationPanel.vue'
+
 export default {
     name: 'app',
     data() {
@@ -35,9 +46,16 @@ export default {
             auth: Object
         }
     },
+    components: {
+        NotificationPanel
+    },
     created() {
         this.auth = AuthService
         AuthService.token()
+    },
+    computed: {
+        ...mapState(['release', 'healthChecks']),
+        ...mapGetters(['failedHealthCheckCount'])
     }
 }
 </script>
@@ -76,5 +94,8 @@ main > .container {
 .feather {
     width: 16px;
     height: 16px;
+}
+#collapseNotifications {
+    width: 30%;
 }
 </style>

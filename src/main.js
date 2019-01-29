@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import store from './store'
 
 Vue.use(Vuelidate)
 Vue.use(BootstrapVue)
@@ -59,5 +60,6 @@ requireFilters.keys().forEach(fileName => {
 
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount('#app')
