@@ -34,9 +34,9 @@ export default {
 
 <style lang="scss">
 @import './assets/custom.scss';
-@import '~bootswatch/dist/Darkly/variables';
+// @import '~bootswatch/dist/Darkly/variables';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootswatch/dist/Darkly/bootswatch';
+// @import '~bootswatch/dist/Darkly/bootswatch';
 @import '~bootstrap-vue/dist/bootstrap-vue';
 
 html,
