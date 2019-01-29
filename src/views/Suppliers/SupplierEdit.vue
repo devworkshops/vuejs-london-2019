@@ -4,17 +4,30 @@
     <form class="form">
       <div class="form-group">
         <label class="form-label">Company Name</label>
-        <input class="form-control" type="text" v-model="model.companyName" id="companyNameField"
-        :class="{ 'is-invalid': errors && errors.companyName }">
+        <input
+          class="form-control"
+          type="text"
+          v-model="model.companyName"
+          id="companyNameField"
+          :class="{ 'is-invalid': errors && errors.companyName }"
+        >
         <div class="invalid-feedback" v-if="errors && errors.companyName">{{ errors.companyName }}</div>
       </div>
       <div class="form-group">
         <label class="form-label">Contact Name</label>
-        <input class="form-control" type="text" v-model="model.contactName" id="contactNameField">
+        <input class="form-control" type="text" v-model="model.contactName" id="contactNameField"
+        :class="{ 'is-invalid': errors && errors.contactName }">
+        <div class="invalid-feedback" v-if="errors && errors.contactName">{{ errors.contactName }}</div>
       </div>
       <div class="form-group">
         <label class="form-label">Contact Title</label>
-        <input class="form-control" type="text" v-model="model.contactTitle" id="contactTitleField">
+        <input class="form-control" type="text" v-model="model.contactTitle" id="contactTitleField"
+        :class="{ 'is-invalid': errors && errors.contactTitle }">
+        <div class="invalid-feedback" v-if="errors && errors.contactTitle">{{ errors.contactTitle }}</div>
+      </div>
+      <div v-if="model.address">
+        <label class="col-form-label">Address</label>
+        <address-form :address="model.address" :errors="errors"></address-form>
       </div>
     </form>
     <p>
