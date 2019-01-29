@@ -9,7 +9,7 @@
     "mock-api": "json-server db.json --watch",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e:headless": "vue-cli-service test:e2e --headless",
-    "test:e2e:ci": "npm-run-all -p -r mock-api test:e2e:headless",
+    "test:e2e:ci": "npm-run-all -p -r json-server-auth test:e2e:headless",
     "test:unit": "vue-cli-service test:unit",
     "json-server-auth": "node auth-json-server.js"
   },

@@ -1,17 +1,17 @@
 <template>
   <div>
     <h1>Login</h1>
-    <form class="form">
+    <form class="form" @submit.prevent="login()">
       <div class="form-group row">
         <label class="col-form-label">Username</label>
-        <input type="text" class="form-control" v-model="model.username">
+        <input type="text" class="form-control" v-model="model.username" id="usernameField">
       </div>
       <div class="form-group row">
         <label class="col-form-label">Password</label>
-        <input type="password" class="form-control" v-model="model.password">
+        <input type="password" class="form-control" v-model="model.password" id="passwordField">
       </div>
       <div class="row">
-        <button class="btn btn-primary" @click.prevent="login()">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
       </div>
     </form>
   </div>
